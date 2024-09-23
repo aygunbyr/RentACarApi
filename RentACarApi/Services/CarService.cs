@@ -5,78 +5,89 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class CarService : ICarService
+    public class CarService : IService<Car>, ICarService
     {
         private readonly IUnitOfWork _unitOfWork;
         public CarService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public void Add(Car car)
+        public async Task AddAsync(Car car)
         {
             _unitOfWork.Car.Add(car);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Delete(Car car)
+        public async Task DeleteAsync(Car car)
         {
             _unitOfWork.Car.Delete(car);
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<Car> GetAll()
+        public async Task<IEnumerable<Car>> GetAllAsync()
         {
-            IEnumerable<Car> cars = _unitOfWork.Car.GetAll();
+            IEnumerable<Car> cars = await _unitOfWork.Car.GetAllAsync();
             return cars;
         }
 
-        public Car GetById(int id)
+        public async Task<Car> GetByIdAsync(int id)
         {
-            Car car = _unitOfWork.Car.GetById(id);
+            Car car = await _unitOfWork.Car.GetByIdAsync(id);
             return car;
         }
 
-        public void Update(Car car)
+        public async Task UpdateAsync(Car car)
         {
             _unitOfWork.Car.Update(car);
+            await _unitOfWork.SaveAsync();
         }
 
-        public List<CarDetailDto> GetAllDetails()
+        public async Task<List<CarDetailDto>> GetAllDetailsAsync()
         {
-            return _unitOfWork.Car.GetAllDetails();
+            var details = await _unitOfWork.Car.GetAllDetails();
+            return details;
         }
 
-        public List<CarDetailDto> GetAllDetailsByFuelId(int fuelId)
+        public async Task<List<CarDetailDto>> GetAllDetailsByFuelIdAsync(int fuelId)
         {
-            return _unitOfWork.Car.GetAllDetailsByFuelId(fuelId);
+            var details = await _unitOfWork.Car.GetAllDetailsByFuelId(fuelId);
+            return details;
         }
 
-        public List<CarDetailDto> GetAllDetailsByColorId(int colorId)
+        public async Task<List<CarDetailDto>> GetAllDetailsByColorIdAsync(int colorId)
         {
-            return _unitOfWork.Car.GetAllDetailsByColorId(colorId);
+            var details = await _unitOfWork.Car.GetAllDetailsByColorId(colorId);
+            return details;
         }
 
-        public List<CarDetailDto> GetAllDetailsByPriceRange(double min, double max)
+        public async Task<List<CarDetailDto>> GetAllDetailsByPriceRangeAsync(double min, double max)
         {
-            return _unitOfWork.Car.GetAllDetailsByPriceRange(min, max);
+            var details = await _unitOfWork.Car.GetAllDetailsByPriceRange(min, max);
+            return details;
         }
 
-        public List<CarDetailDto> GetAllDetailsByBrandNameContains(string brandName)
+        public async Task<List<CarDetailDto>> GetAllDetailsByBrandNameContainsAsync(string brandName)
         {
-            return _unitOfWork.Car.GetAllDetailsByBrandNameContains(brandName);
+            var details = await _unitOfWork.Car.GetAllDetailsByBrandNameContains(brandName);
+            return details;
         }
 
-        public List<CarDetailDto> GetAllDetailsByModelNameContains(string modelName)
+        public async Task<List<CarDetailDto>> GetAllDetailsByModelNameContainsAsync(string modelName)
         {
-            return _unitOfWork.Car.GetAllDetailsByBrandNameContains(modelName);
+            var details = await _unitOfWork.Car.GetAllDetailsByModelNameContains(modelName);
+            return details;
         }
 
-        public CarDetailDto? GetDetailById(int id)
+        public async Task<CarDetailDto?> GetDetailByIdAsync(int id)
         {
-            return _unitOfWork.Car.GetDetailById(id);
+            var detail = await _unitOfWork.Car.GetDetailById(id);
+            return detail;
         }
 
-        public List<CarDetailDto> GetAllDetailsByKilometerRange(int min, int max)
+        public async Task<List<CarDetailDto>> GetAllDetailsByKilometerRangeAsync(int min, int max)
         {
-            return _unitOfWork.Car.GetAllDetailsByKilometerRange(min, max);
+            var details = await _unitOfWork.Car.GetAllDetailsByKilometerRange(min, max);
+            return details;
         }
     }
 }

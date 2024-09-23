@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
 using RentACarApi.Models;
+using RentACarApi.Repositories.Interfaces;
+using RentACarApi.Services;
+using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Controllers
 {
@@ -14,36 +17,36 @@ namespace RentACarApi.Controllers
     [ApiController]
     public class FuelsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IFuelService _fuelService;
 
-        public FuelsController(ApplicationDbContext context)
+        public FuelsController(IFuelService fuelService)
         {
-            _context = context;
+            _fuelService = fuelService;
         }
 
         // GET: api/Fuels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fuel>>> GetFuels()
         {
-            return await _context.Fuels.ToListAsync();
+            var fuels = await _fuelService.GetAllAsync();
+            return Ok(fuels);
         }
 
         // GET: api/Fuels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Fuel>> GetFuel(int id)
         {
-            var fuel = await _context.Fuels.FindAsync(id);
+            var fuel = await _fuelService.GetByIdAsync(id);
 
             if (fuel == null)
             {
                 return NotFound();
             }
 
-            return fuel;
+            return Ok(fuel);
         }
 
         // PUT: api/Fuels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFuel(int id, Fuel fuel)
         {
@@ -52,23 +55,13 @@ namespace RentACarApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(fuel).State = EntityState.Modified;
+            var existingFuel = await _fuelService.GetByIdAsync(id);
+            if (existingFuel == null)
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FuelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _fuelService.UpdateAsync(fuel);
 
             return NoContent();
         }
@@ -78,8 +71,7 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Fuel>> PostFuel(Fuel fuel)
         {
-            _context.Fuels.Add(fuel);
-            await _context.SaveChangesAsync();
+            await _fuelService.AddAsync(fuel);
 
             return CreatedAtAction("GetFuel", new { id = fuel.Id }, fuel);
         }
@@ -88,21 +80,15 @@ namespace RentACarApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFuel(int id)
         {
-            var fuel = await _context.Fuels.FindAsync(id);
+            var fuel = await _fuelService.GetByIdAsync(id);
             if (fuel == null)
             {
                 return NotFound();
             }
 
-            _context.Fuels.Remove(fuel);
-            await _context.SaveChangesAsync();
+            await _fuelService.DeleteAsync(fuel);
 
             return NoContent();
-        }
-
-        private bool FuelExists(int id)
-        {
-            return _context.Fuels.Any(e => e.Id == id);
         }
     }
 }

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
 using RentACarApi.Models;
+using RentACarApi.Repositories.Interfaces;
+using RentACarApi.Services;
+using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Controllers
 {
@@ -14,36 +17,36 @@ namespace RentACarApi.Controllers
     [ApiController]
     public class ColorsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IColorService _colorService;
 
-        public ColorsController(ApplicationDbContext context)
+        public ColorsController(IColorService colorService)
         {
-            _context = context;
+            _colorService = colorService;
         }
 
         // GET: api/Colors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Color>>> GetColors()
         {
-            return await _context.Colors.ToListAsync();
+            var colors = await _colorService.GetAllAsync();
+            return Ok(colors);
         }
 
         // GET: api/Colors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Color>> GetColor(int id)
         {
-            var color = await _context.Colors.FindAsync(id);
+            var color = await _colorService.GetByIdAsync(id);
 
             if (color == null)
             {
                 return NotFound();
             }
 
-            return color;
+            return Ok(color);
         }
 
         // PUT: api/Colors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutColor(int id, Color color)
         {
@@ -52,23 +55,13 @@ namespace RentACarApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(color).State = EntityState.Modified;
+            var existingColor = await _colorService.GetByIdAsync(id);
+            if (existingColor == null)
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ColorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _colorService.UpdateAsync(color);
 
             return NoContent();
         }
@@ -78,8 +71,7 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Color>> PostColor(Color color)
         {
-            _context.Colors.Add(color);
-            await _context.SaveChangesAsync();
+            await _colorService.AddAsync(color);
 
             return CreatedAtAction("GetColor", new { id = color.Id }, color);
         }
@@ -88,21 +80,15 @@ namespace RentACarApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteColor(int id)
         {
-            var color = await _context.Colors.FindAsync(id);
+            var color = await _colorService.GetByIdAsync(id);
             if (color == null)
             {
                 return NotFound();
             }
 
-            _context.Colors.Remove(color);
-            await _context.SaveChangesAsync();
+            await _colorService.DeleteAsync(color);
 
             return NoContent();
-        }
-
-        private bool ColorExists(int id)
-        {
-            return _context.Colors.Any(e => e.Id == id);
         }
     }
 }

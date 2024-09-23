@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
 using RentACarApi.Models;
+using RentACarApi.Repositories.Interfaces;
+using RentACarApi.Services;
+using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Controllers
 {
@@ -14,36 +17,36 @@ namespace RentACarApi.Controllers
     [ApiController]
     public class TransmissionsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITransmissionService _transmissionService;
 
-        public TransmissionsController(ApplicationDbContext context)
+        public TransmissionsController(ITransmissionService transmissionService)
         {
-            _context = context;
+            _transmissionService = transmissionService;
         }
 
         // GET: api/Transmissions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transmission>>> GetTransmissions()
         {
-            return await _context.Transmissions.ToListAsync();
+            var transmissions = await _transmissionService.GetAllAsync();
+            return Ok(transmissions);
         }
 
         // GET: api/Transmissions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Transmission>> GetTransmission(int id)
         {
-            var transmission = await _context.Transmissions.FindAsync(id);
+            var transmission = await _transmissionService.GetByIdAsync(id);
 
             if (transmission == null)
             {
                 return NotFound();
             }
 
-            return transmission;
+            return Ok(transmission);
         }
 
         // PUT: api/Transmissions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTransmission(int id, Transmission transmission)
         {
@@ -52,23 +55,13 @@ namespace RentACarApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(transmission).State = EntityState.Modified;
+            var existingTransmission = await _transmissionService.GetByIdAsync(id);
+            if (existingTransmission == null)
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TransmissionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _transmissionService.UpdateAsync(transmission);
 
             return NoContent();
         }
@@ -78,8 +71,7 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Transmission>> PostTransmission(Transmission transmission)
         {
-            _context.Transmissions.Add(transmission);
-            await _context.SaveChangesAsync();
+            await _transmissionService.AddAsync(transmission);
 
             return CreatedAtAction("GetTransmission", new { id = transmission.Id }, transmission);
         }
@@ -88,21 +80,15 @@ namespace RentACarApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransmission(int id)
         {
-            var transmission = await _context.Transmissions.FindAsync(id);
+            var transmission = await _transmissionService.GetByIdAsync(id);
             if (transmission == null)
             {
                 return NotFound();
             }
 
-            _context.Transmissions.Remove(transmission);
-            await _context.SaveChangesAsync();
+            await _transmissionService.DeleteAsync(transmission);
 
             return NoContent();
-        }
-
-        private bool TransmissionExists(int id)
-        {
-            return _context.Transmissions.Any(e => e.Id == id);
         }
     }
 }

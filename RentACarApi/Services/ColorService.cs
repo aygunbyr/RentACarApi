@@ -4,38 +4,41 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class ColorService : IColorService
+    public class ColorService : IService<Color>, IColorService
     {
         private readonly IUnitOfWork _unitOfWork;
         public ColorService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;            
         }
-        public void Add(Color color)
+        public async Task AddAsync(Color color)
         {
             _unitOfWork.Color.Add(color);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Delete(Color color)
+        public async Task DeleteAsync(Color color)
         {
             _unitOfWork.Color.Delete(color);
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<Color> GetAll()
+        public async Task<IEnumerable<Color>> GetAllAsync()
         {
-            IEnumerable<Color> colors = _unitOfWork.Color.GetAll();
+            IEnumerable<Color> colors = await _unitOfWork.Color.GetAllAsync();
             return colors;
         }
 
-        public Color GetById(int id)
+        public async Task<Color> GetByIdAsync(int id)
         {
-            Color color = _unitOfWork.Color.GetById(id);
+            Color color = await _unitOfWork.Color.GetByIdAsync(id);
             return color;
         }
 
-        public void Update(Color color)
+        public async Task UpdateAsync(Color color)
         {
             _unitOfWork.Color.Update(color);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

@@ -2,12 +2,7 @@
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface IColorService
+    public interface IColorService : IService<Color>
     {
-        IEnumerable<Color> GetAll();
-        Color GetById(int id);
-        void Add(Color color);
-        void Update(Color color);
-        void Delete(Color color);
     }
 }

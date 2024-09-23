@@ -14,9 +14,11 @@ namespace RentACarApi.Repositories
             _db = db;
         }
 
-        public List<CarDetailDto> GetAllDetails()
+        public async Task<List<CarDetailDto>> GetAllDetails()
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
@@ -32,12 +34,20 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving car details", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByFuelId(int fuelId)
+        public async Task<List<CarDetailDto>> GetAllDetailsByFuelId(int fuelId)
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
@@ -54,12 +64,20 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by Fuel Id {fuelId}", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByColorId(int colorId)
+        public async Task<List<CarDetailDto>> GetAllDetailsByColorId(int colorId)
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
@@ -76,12 +94,20 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by Color Id {colorId}", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByPriceRange(double min, double max)
+        public async Task<List<CarDetailDto>> GetAllDetailsByPriceRange(double min, double max)
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
@@ -98,16 +124,24 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by price range {min}-{max}", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByBrandNameContains(string brandName)
+        public async Task<List<CarDetailDto>> GetAllDetailsByBrandNameContains(string brandName)
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
-                .Where(car => car.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase))
+                .Where(car => car.BrandName.ToLower().Contains(brandName.ToLower()))
                 .Select(car => new CarDetailDto(
                     car.Id,
                     car.Fuel.Name,
@@ -120,16 +154,24 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by brand name contains {brandName}", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByModelNameContains(string modelName)
+        public async Task<List<CarDetailDto>> GetAllDetailsByModelNameContains(string modelName)
         {
-            return _db.Cars
+            try
+            {
+                var details = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
-                .Where(car => car.ModelName.Contains(modelName, StringComparison.InvariantCultureIgnoreCase))
+                .Where(car => car.ModelName.ToLower().Contains(modelName.Trim().ToLower()))
                 .Select(car => new CarDetailDto(
                     car.Id,
                     car.Fuel.Name,
@@ -142,38 +184,53 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            } 
+            catch(Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by model name contains {modelName}", ex);
+            }
         }
 
-        public CarDetailDto? GetDetailById(int id)
+        public async Task<CarDetailDto?> GetDetailById(int id)
         {
-            var car = _db.Cars
+            try
+            {
+                var car = await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
-                .FirstOrDefault(car => car.Id == id);
+                .FirstOrDefaultAsync(car => car.Id == id);
 
-            if (car == null)
-                return null;
+                if (car == null)
+                    return null;
 
-            return new CarDetailDto(
-                car.Id,
-                car.Fuel.Name,
-                car.Transmission.Name,
-                car.Color.Name,
-                car.CarState,
-                car.KiloMeter,
-                car.ModelYear,
-                car.Plate,
-                car.BrandName,
-                car.ModelName,
-                car.DailyPrice
-            );
+                return new CarDetailDto(
+                    car.Id,
+                    car.Fuel.Name,
+                    car.Transmission.Name,
+                    car.Color.Name,
+                    car.CarState,
+                    car.KiloMeter,
+                    car.ModelYear,
+                    car.Plate,
+                    car.BrandName,
+                    car.ModelName,
+                    car.DailyPrice
+                );
+            } 
+            catch(Exception ex)
+            {
+                throw new Exception($"Error retrieving car detail by id {id}", ex);
+            }
         }
 
-        public List<CarDetailDto> GetAllDetailsByKilometerRange(int min, int max)
+        public async Task<List<CarDetailDto>> GetAllDetailsByKilometerRange(int min, int max)
         {
-            return _db.Cars
+            try
+            {
+                var details =  await _db.Cars
                 .Include(car => car.Fuel)
                 .Include(car => car.Transmission)
                 .Include(car => car.Color)
@@ -190,7 +247,13 @@ namespace RentACarApi.Repositories
                     car.BrandName,
                     car.ModelName,
                     car.DailyPrice
-                )).ToList();
+                )).ToListAsync();
+                return details;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"Error retrieving car details by kilometer range {min}-{max}", ex);
+            }
         }
     }
 }

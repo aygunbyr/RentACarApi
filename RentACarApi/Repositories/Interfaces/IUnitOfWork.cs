@@ -7,6 +7,6 @@
         IFuelRepository Fuel { get; }
         ITransmissionRepository Transmission { get; }
 
-        void Save();
+        public Task SaveAsync();
     }
 }

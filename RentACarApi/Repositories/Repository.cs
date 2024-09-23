@@ -7,7 +7,7 @@ namespace RentACarApi.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _db;
-        internal DbSet<T> dbSet;
+        private readonly DbSet<T> dbSet;
         public Repository(ApplicationDbContext db)
         {
             _db = db;
@@ -16,27 +16,67 @@ namespace RentACarApi.Repositories
 
         public void Add(T entity)
         {
-            dbSet.Add(entity);
+            try
+            {
+                dbSet.Add(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error adding entity", ex);
+            }
         }
 
         public void Delete(T entity)
         {
-            dbSet.Remove(entity);
+            try
+            {
+                dbSet.Remove(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error deleting entity", ex);
+            }
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return dbSet.ToList();
+            try
+            {
+                return await dbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving entities", ex);
+            }
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            return dbSet.Find(id);
+            try
+            {
+                T entity = await dbSet.FindAsync(id);
+                if(entity == null)
+                {
+                    throw new KeyNotFoundException($"Entity with id {id} not found.");
+                }
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving entity with id {id}", ex);
+            }
         }
 
         public void Update(T entity)
         {
-            dbSet.Update(entity);
+            try
+            {
+                dbSet.Update(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating entity", ex);
+            }
         }
     }
 }

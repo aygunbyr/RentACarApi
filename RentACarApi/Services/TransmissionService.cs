@@ -4,38 +4,41 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class TransmissionService : ITransmissionService
+    public class TransmissionService : IService<Transmission>, ITransmissionService
     {
         private readonly IUnitOfWork _unitOfWork;
         public TransmissionService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;            
         }
-        public void Add(Transmission transmission)
+        public async Task AddAsync(Transmission transmission)
         {
             _unitOfWork.Transmission.Add(transmission);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Delete(Transmission transmission)
+        public async Task DeleteAsync(Transmission transmission)
         {
             _unitOfWork.Transmission.Delete(transmission);
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<Transmission> GetAll()
+        public async Task<IEnumerable<Transmission>> GetAllAsync()
         {
-            IEnumerable<Transmission> transmissions = _unitOfWork.Transmission.GetAll();
+            IEnumerable<Transmission> transmissions = await _unitOfWork.Transmission.GetAllAsync();
             return transmissions;
         }
 
-        public Transmission GetById(int id)
+        public async Task<Transmission> GetByIdAsync(int id)
         {
-            Transmission transmission = _unitOfWork.Transmission.GetById(id);
+            Transmission transmission = await _unitOfWork.Transmission.GetByIdAsync(id);
             return transmission;
         }
 
-        public void Update(Transmission transmission)
+        public async Task UpdateAsync(Transmission transmission)
         {
             _unitOfWork.Transmission.Update(transmission);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

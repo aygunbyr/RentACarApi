@@ -5,38 +5,41 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class FuelService : IFuelService
+    public class FuelService : IService<Fuel>, IFuelService
     {
         private readonly IUnitOfWork _unitOfWork;
         public FuelService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public void Add(Fuel fuel)
+        public async Task AddAsync(Fuel fuel)
         {
             _unitOfWork.Fuel.Add(fuel);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Delete(Fuel fuel)
+        public async Task DeleteAsync(Fuel fuel)
         {
             _unitOfWork.Fuel.Delete(fuel);
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<Fuel> GetAll()
+        public async Task<IEnumerable<Fuel>> GetAllAsync()
         {
-            IEnumerable<Fuel> fuels = _unitOfWork.Fuel.GetAll();
+            IEnumerable<Fuel> fuels = await _unitOfWork.Fuel.GetAllAsync();
             return fuels;
         }
 
-        public Fuel GetById(int id)
+        public async Task<Fuel> GetByIdAsync(int id)
         {
-            Fuel fuel = _unitOfWork.Fuel.GetById(id);
+            Fuel fuel = await _unitOfWork.Fuel.GetByIdAsync(id);
             return fuel;
         }
 
-        public void Update(Fuel fuel)
+        public async Task UpdateAsync(Fuel fuel)
         {
             _unitOfWork.Fuel.Update(fuel);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

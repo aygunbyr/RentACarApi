@@ -3,28 +3,22 @@ using RentACarApi.Models;
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface ICarService
+    public interface ICarService : IService<Car>
     {
-        IEnumerable<Car> GetAll();
-        Car GetById(int id);
-        void Add(Car car);
-        void Update(Car car);
-        void Delete(Car car);
+        public Task<List<CarDetailDto>> GetAllDetailsAsync();
 
-        public List<CarDetailDto> GetAllDetails();
+        public Task<List<CarDetailDto>> GetAllDetailsByFuelIdAsync(int fuelId);
 
-        public List<CarDetailDto> GetAllDetailsByFuelId(int fuelId);
+        public Task<List<CarDetailDto>> GetAllDetailsByColorIdAsync(int colorId);
 
-        public List<CarDetailDto> GetAllDetailsByColorId(int colorId);
+        public Task<List<CarDetailDto>> GetAllDetailsByPriceRangeAsync(double min, double max);
 
-        public List<CarDetailDto> GetAllDetailsByPriceRange(double min, double max);
+        public Task<List<CarDetailDto>> GetAllDetailsByBrandNameContainsAsync(string brandName);
 
-        public List<CarDetailDto> GetAllDetailsByBrandNameContains(string brandName);
+        public Task<List<CarDetailDto>> GetAllDetailsByModelNameContainsAsync(string modelName);
 
-        public List<CarDetailDto> GetAllDetailsByModelNameContains(string modelName);
+        public Task<CarDetailDto?> GetDetailByIdAsync(int id);
 
-        public CarDetailDto? GetDetailById(int id);
-
-        public List<CarDetailDto> GetAllDetailsByKilometerRange(int min, int max);
+        public Task<List<CarDetailDto>> GetAllDetailsByKilometerRangeAsync(int min, int max);
     }
 }
