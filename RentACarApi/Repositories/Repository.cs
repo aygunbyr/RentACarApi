@@ -68,18 +68,5 @@ namespace RentACarApi.Repositories
                 throw new Exception($"Error retrieving entity with id {id}", ex);
             }
         }
-
-        public T Update(T entity)
-        {
-            try
-            {
-                dbSet.Update(entity);
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error updating entity", ex);
-            }
-        }
     }
 }

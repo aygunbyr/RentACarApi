@@ -8,23 +8,31 @@ namespace RentACarApi.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public int ColorId { get; set; }
+
         [JsonIgnore]
         [ForeignKey("ColorId")]
-        public Color Color { get; set; }
+        public Color? Color { get; set; }
+
         [Required]
         public int FuelId { get; set; }
+
         [JsonIgnore]
         [ForeignKey("FuelId")]
-        public Fuel Fuel { get; set; }
+        public Fuel? Fuel { get; set; }
+
         [Required]
         public int TransmissionId { get; set; }
+
         [JsonIgnore]
         [ForeignKey("TransmissionId")]
-        public Transmission Transmission { get; set; }
+        public Transmission? Transmission { get; set; }
+
         [Required]
         public string CarState { get; set; }
+
         public int? KiloMeter { get; set; }
         public short? ModelYear { get; set; }
         public string? Plate { get; set; }

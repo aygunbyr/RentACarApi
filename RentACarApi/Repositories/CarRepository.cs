@@ -14,6 +14,34 @@ namespace RentACarApi.Repositories
             _db = db;
         }
 
+        public Car Update(Car car)
+        {
+            try
+            {
+                var existingCar = _db.Cars.FirstOrDefault(x => x.Id == car.Id);
+                if (existingCar == null)
+                {
+                    throw new KeyNotFoundException($"Car with id {car.Id} not found");
+                }
+                existingCar.ColorId = car.ColorId;
+                existingCar.FuelId = car.FuelId;
+                existingCar.TransmissionId = car.TransmissionId;
+                existingCar.CarState = car.CarState;
+                existingCar.KiloMeter = car.KiloMeter;
+                existingCar.ModelYear = car.ModelYear;
+                existingCar.Plate = car.Plate;
+                existingCar.BrandName = car.BrandName;
+                existingCar.ModelName = car.ModelName;
+                existingCar.DailyPrice = car.DailyPrice;
+                _db.Cars.Update(existingCar);
+                return existingCar;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating entity", ex);
+            }
+        }
+
         public async Task<List<CarDetailDto>> GetAllDetails()
         {
             try

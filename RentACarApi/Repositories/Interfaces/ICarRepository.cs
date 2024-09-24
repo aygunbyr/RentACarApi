@@ -5,6 +5,8 @@ namespace RentACarApi.Repositories.Interfaces
 {
     public interface ICarRepository : IRepository<Car>
     {
+        public Car Update(Car car);
+
         public Task<List<CarDetailDto>> GetAllDetails();
 
         public Task<List<CarDetailDto>> GetAllDetailsByFuelId(int fuelId);
