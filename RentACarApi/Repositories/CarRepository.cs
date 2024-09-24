@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
-using RentACarApi.Dtos;
 using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 using RentACarApi.Repositories.Interfaces;
 
 namespace RentACarApi.Repositories

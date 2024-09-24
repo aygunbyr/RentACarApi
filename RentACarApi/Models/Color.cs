@@ -2,8 +2,14 @@
 
 namespace RentACarApi.Models
 {
-    public class Color
+    public sealed class Color : Entity
     {
+        public Color() { }
+        public Color(int id, string? name) : base(id)
+        {
+            Name = name;
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]

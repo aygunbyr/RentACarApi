@@ -1,14 +1,11 @@
-﻿using RentACarApi.Dtos;
-using System.Linq.Expressions;
-
-namespace RentACarApi.Repositories.Interfaces
+﻿namespace RentACarApi.Repositories.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<Entity>
     {
-        public Task<IEnumerable<T>> GetAllAsync();
-        public Task<T> GetByIdAsync(int id);
-        public void Add(T entity);
-        public void Update(T entity);
-        public void Delete(T entity);
+        public Task<IEnumerable<Entity>> GetAllAsync();
+        public Task<Entity> GetByIdAsync(int id);
+        public void Add(Entity entity);
+        public void Update(Entity entity);
+        public void Delete(Entity entity);
     }
 }
