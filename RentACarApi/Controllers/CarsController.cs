@@ -60,9 +60,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _carService.UpdateAsync(car);
+            Car puttedCar = await _carService.UpdateAsync(car);
 
-            return NoContent();
+            return Ok(puttedCar);
         }
 
         // POST: api/Cars
@@ -70,9 +70,9 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Car>> PostCar(Car car)
         {
-            await _carService.AddAsync(car);
+            Car addedCar = await _carService.AddAsync(car);
 
-            return CreatedAtAction("GetCar", new { id = car.Id }, car);
+            return CreatedAtAction("GetCar", new { id = car.Id }, addedCar);
         }
 
         // DELETE: api/Cars/5
@@ -84,9 +84,9 @@ namespace RentACarApi.Controllers
             {
                 return NotFound();
             }
-            await _carService.DeleteAsync(car);
+            Car deletedCar = await _carService.DeleteAsync(car);
 
-            return NoContent();
+            return Ok(deletedCar);
         }
 
         // GET: api/Car/details

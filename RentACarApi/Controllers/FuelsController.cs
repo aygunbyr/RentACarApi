@@ -61,9 +61,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _fuelService.UpdateAsync(fuel);
+            Fuel puttedFuel = await _fuelService.UpdateAsync(fuel);
 
-            return NoContent();
+            return Ok(puttedFuel);
         }
 
         // POST: api/Fuels
@@ -71,9 +71,9 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Fuel>> PostFuel(Fuel fuel)
         {
-            await _fuelService.AddAsync(fuel);
+            Fuel addedFuel = await _fuelService.AddAsync(fuel);
 
-            return CreatedAtAction("GetFuel", new { id = fuel.Id }, fuel);
+            return CreatedAtAction("GetFuel", new { id = fuel.Id }, addedFuel);
         }
 
         // DELETE: api/Fuels/5
@@ -86,9 +86,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _fuelService.DeleteAsync(fuel);
+            Fuel deletedFuel = await _fuelService.DeleteAsync(fuel);
 
-            return NoContent();
+            return Ok(deletedFuel);
         }
     }
 }

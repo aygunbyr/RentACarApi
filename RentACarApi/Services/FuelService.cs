@@ -12,16 +12,18 @@ namespace RentACarApi.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task AddAsync(Fuel fuel)
+        public async Task<Fuel> AddAsync(Fuel fuel)
         {
-            _unitOfWork.Fuel.Add(fuel);
+            Fuel fuelAdded = _unitOfWork.Fuel.Add(fuel);
             await _unitOfWork.SaveAsync();
+            return fuelAdded;
         }
 
-        public async Task DeleteAsync(Fuel fuel)
+        public async Task<Fuel> DeleteAsync(Fuel fuel)
         {
-            _unitOfWork.Fuel.Delete(fuel);
+            Fuel fuelDeleted = _unitOfWork.Fuel.Delete(fuel);
             await _unitOfWork.SaveAsync();
+            return fuelDeleted;
         }
 
         public async Task<IEnumerable<Fuel>> GetAllAsync()
@@ -36,10 +38,11 @@ namespace RentACarApi.Services
             return fuel;
         }
 
-        public async Task UpdateAsync(Fuel fuel)
+        public async Task<Fuel> UpdateAsync(Fuel fuel)
         {
-            _unitOfWork.Fuel.Update(fuel);
+            Fuel fuelUpdated = _unitOfWork.Fuel.Update(fuel);
             await _unitOfWork.SaveAsync();
+            return fuelUpdated;
         }
     }
 }

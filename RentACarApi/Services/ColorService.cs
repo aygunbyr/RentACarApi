@@ -11,16 +11,18 @@ namespace RentACarApi.Services
         {
             _unitOfWork = unitOfWork;            
         }
-        public async Task AddAsync(Color color)
+        public async Task<Color> AddAsync(Color color)
         {
-            _unitOfWork.Color.Add(color);
+            Color addedColor = _unitOfWork.Color.Add(color);
             await _unitOfWork.SaveAsync();
+            return addedColor;
         }
 
-        public async Task DeleteAsync(Color color)
+        public async Task<Color> DeleteAsync(Color color)
         {
-            _unitOfWork.Color.Delete(color);
+            Color deletedColor = _unitOfWork.Color.Delete(color);
             await _unitOfWork.SaveAsync();
+            return deletedColor;
         }
 
         public async Task<IEnumerable<Color>> GetAllAsync()
@@ -35,10 +37,11 @@ namespace RentACarApi.Services
             return color;
         }
 
-        public async Task UpdateAsync(Color color)
+        public async Task<Color> UpdateAsync(Color color)
         {
-            _unitOfWork.Color.Update(color);
+            Color updatedColor = _unitOfWork.Color.Update(color);
             await _unitOfWork.SaveAsync();
+            return updatedColor;
         }
     }
 }

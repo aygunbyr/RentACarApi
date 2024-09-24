@@ -61,9 +61,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _colorService.UpdateAsync(color);
+            Color puttedColor = await _colorService.UpdateAsync(color);
 
-            return NoContent();
+            return Ok(puttedColor);
         }
 
         // POST: api/Colors
@@ -71,9 +71,9 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Color>> PostColor(Color color)
         {
-            await _colorService.AddAsync(color);
+            Color addedColor = await _colorService.AddAsync(color);
 
-            return CreatedAtAction("GetColor", new { id = color.Id }, color);
+            return CreatedAtAction("GetColor", new { id = color.Id }, addedColor);
         }
 
         // DELETE: api/Colors/5
@@ -86,9 +86,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _colorService.DeleteAsync(color);
+            Color deletedColor = await _colorService.DeleteAsync(color);
 
-            return NoContent();
+            return Ok(deletedColor);
         }
     }
 }

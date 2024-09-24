@@ -61,9 +61,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _transmissionService.UpdateAsync(transmission);
+            Transmission puttedTransmission = await _transmissionService.UpdateAsync(transmission);
 
-            return NoContent();
+            return Ok(puttedTransmission);
         }
 
         // POST: api/Transmissions
@@ -71,9 +71,9 @@ namespace RentACarApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Transmission>> PostTransmission(Transmission transmission)
         {
-            await _transmissionService.AddAsync(transmission);
+            Transmission addedTransmission = await _transmissionService.AddAsync(transmission);
 
-            return CreatedAtAction("GetTransmission", new { id = transmission.Id }, transmission);
+            return CreatedAtAction("GetTransmission", new { id = transmission.Id }, addedTransmission);
         }
 
         // DELETE: api/Transmissions/5
@@ -86,9 +86,9 @@ namespace RentACarApi.Controllers
                 return NotFound();
             }
 
-            await _transmissionService.DeleteAsync(transmission);
+            Transmission deletedTransmission = await _transmissionService.DeleteAsync(transmission);
 
-            return NoContent();
+            return Ok(deletedTransmission);
         }
     }
 }

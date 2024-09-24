@@ -14,11 +14,12 @@ namespace RentACarApi.Repositories
             this.dbSet = _db.Set<T>();
         }
 
-        public void Add(T entity)
+        public T Add(T entity)
         {
             try
             {
                 dbSet.Add(entity);
+                return entity;
             }
             catch (Exception ex)
             {
@@ -26,11 +27,12 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public void Delete(T entity)
+        public T Delete(T entity)
         {
             try
             {
                 dbSet.Remove(entity);
+                return entity;
             }
             catch (Exception ex)
             {
@@ -67,11 +69,12 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public void Update(T entity)
+        public T Update(T entity)
         {
             try
             {
                 dbSet.Update(entity);
+                return entity;
             }
             catch (Exception ex)
             {

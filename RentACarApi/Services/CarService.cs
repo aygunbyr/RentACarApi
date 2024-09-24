@@ -12,16 +12,18 @@ namespace RentACarApi.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task AddAsync(Car car)
+        public async Task<Car> AddAsync(Car car)
         {
-            _unitOfWork.Car.Add(car);
+            Car addedCar = _unitOfWork.Car.Add(car);
             await _unitOfWork.SaveAsync();
+            return addedCar;
         }
 
-        public async Task DeleteAsync(Car car)
+        public async Task<Car> DeleteAsync(Car car)
         {
-            _unitOfWork.Car.Delete(car);
+            Car deletedCar = _unitOfWork.Car.Delete(car);
             await _unitOfWork.SaveAsync();
+            return deletedCar;
         }
 
         public async Task<IEnumerable<Car>> GetAllAsync()
@@ -36,10 +38,11 @@ namespace RentACarApi.Services
             return car;
         }
 
-        public async Task UpdateAsync(Car car)
+        public async Task<Car> UpdateAsync(Car car)
         {
-            _unitOfWork.Car.Update(car);
+            Car updatedCar = _unitOfWork.Car.Update(car);
             await _unitOfWork.SaveAsync();
+            return updatedCar;
         }
 
         public async Task<List<CarDetailDto>> GetAllDetailsAsync()

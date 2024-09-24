@@ -11,16 +11,18 @@ namespace RentACarApi.Services
         {
             _unitOfWork = unitOfWork;            
         }
-        public async Task AddAsync(Transmission transmission)
+        public async Task<Transmission> AddAsync(Transmission transmission)
         {
-            _unitOfWork.Transmission.Add(transmission);
+            Transmission addedTransmission = _unitOfWork.Transmission.Add(transmission);
             await _unitOfWork.SaveAsync();
+            return addedTransmission;
         }
 
-        public async Task DeleteAsync(Transmission transmission)
+        public async Task<Transmission> DeleteAsync(Transmission transmission)
         {
-            _unitOfWork.Transmission.Delete(transmission);
+            Transmission deletedTransmission = _unitOfWork.Transmission.Delete(transmission);
             await _unitOfWork.SaveAsync();
+            return deletedTransmission;
         }
 
         public async Task<IEnumerable<Transmission>> GetAllAsync()
@@ -35,10 +37,11 @@ namespace RentACarApi.Services
             return transmission;
         }
 
-        public async Task UpdateAsync(Transmission transmission)
+        public async Task<Transmission> UpdateAsync(Transmission transmission)
         {
-            _unitOfWork.Transmission.Update(transmission);
+            Transmission updatedTransmission = _unitOfWork.Transmission.Update(transmission);
             await _unitOfWork.SaveAsync();
+            return updatedTransmission;
         }
     }
 }

@@ -7,8 +7,8 @@ namespace RentACarApi.Repositories.Interfaces
     {
         public Task<IEnumerable<T>> GetAllAsync();
         public Task<T> GetByIdAsync(int id);
-        public void Add(T entity);
-        public void Update(T entity);
-        public void Delete(T entity);
+        public T Add(T entity);
+        public T Update(T entity);
+        public T Delete(T entity);
     }
 }
