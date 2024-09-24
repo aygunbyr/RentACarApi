@@ -2,14 +2,8 @@
 
 namespace RentACarApi.Models
 {
-    public sealed class Transmission : Entity
+    public class Transmission
     {
-        public Transmission() { }
-        public Transmission(int id, string? name) : base(id)
-        {
-            Name = name;
-        }
-
         [Key]
         public int Id { get; set; }
         [Required]

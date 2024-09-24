@@ -1,5 +1,5 @@
-﻿using RentACarApi.Models;
-using RentACarApi.Models.Dtos;
+﻿using RentACarApi.Dtos;
+using RentACarApi.Models;
 
 namespace RentACarApi.Services.Interfaces
 {

@@ -1,11 +1,11 @@
 ﻿namespace RentACarApi.Services.Interfaces
 {
-    public interface IService<Entity>
+    public interface IService<T> where T : class
     {
-        Task<IEnumerable<Entity>> GetAllAsync();
-        Task<Entity> GetByIdAsync(int id);
-        Task AddAsync(Entity entity);
-        Task DeleteAsync(Entity entity);
-        Task UpdateAsync(Entity entity);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
+        Task AddAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }

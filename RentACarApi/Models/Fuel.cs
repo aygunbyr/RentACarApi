@@ -2,14 +2,8 @@
 
 namespace RentACarApi.Models
 {
-    public sealed class Fuel : Entity
+    public class Fuel
     {
-        public Fuel() { }
-        public Fuel(int id, string? name) : base(id)
-        {
-            Name = name;
-        }
-
         [Key]
         public int Id { get; set; }
         [Required]

@@ -1,4 +1,4 @@
-﻿namespace RentACarApi.Models.Dtos
+﻿namespace RentACarApi.Dtos
 {
     public record CarDetailDto(int Id,
                                string? FuelName,
