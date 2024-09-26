@@ -2,7 +2,7 @@
 
 namespace RentACarApi.Repositories.Interfaces
 {
-    public interface IFuelRepository : IRepository<Fuel>
+    public interface IFuelRepository : IRepository<Fuel, int>
     {
         public Fuel Update(Fuel fuel);
     }

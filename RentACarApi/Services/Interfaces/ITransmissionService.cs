@@ -2,7 +2,7 @@
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface ITransmissionService : IService<Transmission>
+    public interface ITransmissionService : IService<Transmission, int>
     {
     }
 }

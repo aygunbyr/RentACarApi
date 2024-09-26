@@ -1,9 +1,9 @@
-﻿using RentACarApi.Dtos;
-using RentACarApi.Models;
+﻿using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface ICarService : IService<Car>
+    public interface ICarService : IService<Car, long>
     {
         public Task<List<CarDetailDto>> GetAllDetailsAsync();
 

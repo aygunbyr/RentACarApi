@@ -4,10 +4,25 @@ using System.Text.Json.Serialization;
 
 namespace RentACarApi.Models
 {
-    public class Car
+    public sealed class Car : Entity<long>
     {
-        [Key]
-        public int Id { get; set; }
+        public Car() { }
+        public Car(long id, int colorId, Color? color, int fuelId, Fuel? fuel, int transmissionId, Transmission? transmission, string carState, int? kiloMeter, short? modelYear, string? plate, string? brandName, string? modelName, double? dailyPrice) : base(id)
+        {
+            ColorId = colorId;
+            Color = color;
+            FuelId = fuelId;
+            Fuel = fuel;
+            TransmissionId = transmissionId;
+            Transmission = transmission;
+            CarState = carState;
+            KiloMeter = kiloMeter;
+            ModelYear = modelYear;
+            Plate = plate;
+            BrandName = brandName;
+            ModelName = modelName;
+            DailyPrice = dailyPrice;
+        }
 
         [Required]
         public int ColorId { get; set; }

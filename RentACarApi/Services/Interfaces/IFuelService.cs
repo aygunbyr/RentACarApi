@@ -2,7 +2,7 @@
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface IFuelService : IService<Fuel>
+    public interface IFuelService : IService<Fuel, int>
     {
     }
 }

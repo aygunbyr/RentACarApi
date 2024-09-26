@@ -14,6 +14,10 @@ namespace RentACarApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Color>().Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Color>().Property(c => c.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "Red"},
                 new Color { Id = 2, Name = "Blue"},
@@ -26,16 +30,25 @@ namespace RentACarApi.Data
                 new Color { Id = 9, Name = "Purple" }
                 );
 
+            modelBuilder.Entity<Fuel>().Property(f => f.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Fuel>().Property(f => f.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+
             modelBuilder.Entity<Fuel>().HasData(
                 new Fuel { Id = 1, Name = "Gasoline" },
                 new Fuel { Id = 2, Name = "Diesel" },
                 new Fuel { Id = 3, Name = "Electricity" }
                 );
 
+            modelBuilder.Entity<Transmission>().Property(t => t.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Transmission>().Property(t => t.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+
             modelBuilder.Entity<Transmission>().HasData(
                 new Transmission { Id = 1, Name = "Automatic"},
                 new Transmission { Id = 2, Name = "Manual" }
                 );
+
+            modelBuilder.Entity<Car>().Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Car>().Property(c => c.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<Car>().HasData(
                 new Car { Id = 1, ColorId = 1, FuelId = 3, TransmissionId = 1, CarState = "Available", KiloMeter = 15000, ModelYear = 2016, Plate = "34 AB 1456", BrandName = "Mercedes Benz", ModelName = "EQC", DailyPrice = 500.00 },

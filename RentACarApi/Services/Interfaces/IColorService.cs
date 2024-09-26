@@ -2,7 +2,7 @@
 
 namespace RentACarApi.Services.Interfaces
 {
-    public interface IColorService : IService<Color>
+    public interface IColorService : IService<Color, int>
     {
     }
 }

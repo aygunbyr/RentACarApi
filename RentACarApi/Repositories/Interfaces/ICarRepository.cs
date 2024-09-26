@@ -1,9 +1,9 @@
-﻿using RentACarApi.Dtos;
-using RentACarApi.Models;
+﻿using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 
 namespace RentACarApi.Repositories.Interfaces
 {
-    public interface ICarRepository : IRepository<Car>
+    public interface ICarRepository : IRepository<Car, long>
     {
         public Car Update(Car car);
 
@@ -19,7 +19,7 @@ namespace RentACarApi.Repositories.Interfaces
 
         public Task<List<CarDetailDto>> GetAllDetailsByModelNameContains(string modelName);
 
-        public Task<CarDetailDto?> GetDetailById(int id);
+        public Task<CarDetailDto?> GetDetailById(long id);
 
         public Task<List<CarDetailDto>> GetAllDetailsByKilometerRange(int min, int max);
     }

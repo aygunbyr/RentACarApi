@@ -5,7 +5,7 @@ using RentACarApi.Repositories.Interfaces;
 
 namespace RentACarApi.Repositories
 {
-    public class ColorRepository : Repository<Color>, IColorRepository
+    public class ColorRepository : Repository<Color, int>, IColorRepository
     {
         private readonly ApplicationDbContext _db;
         public ColorRepository(ApplicationDbContext db) : base(db)

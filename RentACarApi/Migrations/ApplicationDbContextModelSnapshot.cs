@@ -24,11 +24,11 @@ namespace RentACarApi.Migrations
 
             modelBuilder.Entity("RentACarApi.Models.Car", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BrandName")
                         .HasColumnType("nvarchar(max)");
@@ -39,6 +39,11 @@ namespace RentACarApi.Migrations
 
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<double?>("DailyPrice")
                         .HasColumnType("float");
@@ -61,6 +66,11 @@ namespace RentACarApi.Migrations
                     b.Property<int>("TransmissionId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
@@ -74,143 +84,163 @@ namespace RentACarApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 1L,
                             BrandName = "Mercedes Benz",
                             CarState = "Available",
                             ColorId = 1,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5497),
                             DailyPrice = 500.0,
                             FuelId = 3,
                             KiloMeter = 15000,
                             ModelName = "EQC",
                             ModelYear = (short)2016,
                             Plate = "34 AB 1456",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5500)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 2L,
                             BrandName = "Mercedes Benz",
                             CarState = "Available",
                             ColorId = 2,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5515),
                             DailyPrice = 1000.0,
                             FuelId = 3,
                             KiloMeter = 30000,
                             ModelName = "EQS",
                             ModelYear = (short)2018,
                             Plate = "34 BR 8482",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5515)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 3L,
                             BrandName = "Mercedes Benz",
                             CarState = "Available",
                             ColorId = 3,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5520),
                             DailyPrice = 1500.0,
                             FuelId = 3,
                             KiloMeter = 40000,
                             ModelName = "EQA",
                             ModelYear = (short)2019,
                             Plate = "34 MA 3341",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5520)
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 4L,
                             BrandName = "Mercedes Benz",
                             CarState = "On Rent",
                             ColorId = 4,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5524),
                             DailyPrice = 1200.0,
                             FuelId = 3,
                             KiloMeter = 20000,
                             ModelName = "EQS SUV",
                             ModelYear = (short)2022,
                             Plate = "41 V 1756",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5524)
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 5L,
                             BrandName = "Mercedes Benz",
                             CarState = "On Rent",
                             ColorId = 5,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5527),
                             DailyPrice = 800.0,
                             FuelId = 1,
                             KiloMeter = 22000,
                             ModelName = "CLA",
                             ModelYear = (short)2024,
                             Plate = "41 AB 8601",
-                            TransmissionId = 2
+                            TransmissionId = 2,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5528)
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 6L,
                             BrandName = "Mercedes Benz",
                             CarState = "Available",
                             ColorId = 6,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5531),
                             DailyPrice = 900.0,
                             FuelId = 1,
                             KiloMeter = 14000,
                             ModelName = "E-Class",
                             ModelYear = (short)2018,
                             Plate = "41 AN 2016",
-                            TransmissionId = 2
+                            TransmissionId = 2,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5532)
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 7L,
                             BrandName = "BMW",
                             CarState = "Available",
                             ColorId = 7,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5535),
                             DailyPrice = 750.0,
                             FuelId = 2,
                             KiloMeter = 55000,
                             ModelName = "X5",
                             ModelYear = (short)2019,
                             Plate = "16 DE 2856",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5535)
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 8L,
                             BrandName = "BMW",
                             CarState = "Available",
                             ColorId = 8,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5538),
                             DailyPrice = 900.0,
                             FuelId = 2,
                             KiloMeter = 35000,
                             ModelName = "X7",
                             ModelYear = (short)2016,
                             Plate = "16 TU 2230",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5539)
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 9L,
                             BrandName = "Audi",
                             CarState = "In Care",
                             ColorId = 9,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5542),
                             DailyPrice = 1300.0,
                             FuelId = 1,
                             KiloMeter = 60000,
                             ModelName = "A8",
                             ModelYear = (short)2018,
                             Plate = "35 MN 4546",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5543)
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 10L,
                             BrandName = "Audi",
                             CarState = "In Care",
                             ColorId = 1,
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(5546),
                             DailyPrice = 1500.0,
                             FuelId = 1,
                             KiloMeter = 75000,
                             ModelName = "Q7",
                             ModelYear = (short)2020,
                             Plate = "35 YU 9402",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(5546)
                         });
                 });
 
@@ -222,9 +252,19 @@ namespace RentACarApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
 
@@ -234,47 +274,65 @@ namespace RentACarApi.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Red"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(250),
+                            Name = "Red",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(268)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Blue"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(272),
+                            Name = "Blue",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(272)
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Green"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(274),
+                            Name = "Green",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(275)
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Black"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(276),
+                            Name = "Black",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(276)
                         },
                         new
                         {
                             Id = 5,
-                            Name = "White"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(278),
+                            Name = "White",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(278)
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Gray"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(280),
+                            Name = "Gray",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(280)
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Yellow"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(282),
+                            Name = "Yellow",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(282)
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Orange"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(285),
+                            Name = "Orange",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(285)
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Purple"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(286),
+                            Name = "Purple",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(287)
                         });
                 });
 
@@ -286,9 +344,19 @@ namespace RentACarApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
 
@@ -298,17 +366,23 @@ namespace RentACarApi.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Gasoline"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(2193),
+                            Name = "Gasoline",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(2196)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Diesel"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(2199),
+                            Name = "Diesel",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(2199)
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Electricity"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(2201),
+                            Name = "Electricity",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(2202)
                         });
                 });
 
@@ -320,9 +394,19 @@ namespace RentACarApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
 
@@ -332,12 +416,16 @@ namespace RentACarApi.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Automatic"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(3600),
+                            Name = "Automatic",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(3603)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Manual"
+                            CreatedAt = new DateTime(2024, 9, 26, 22, 9, 31, 370, DateTimeKind.Local).AddTicks(3605),
+                            Name = "Manual",
+                            UpdatedAt = new DateTime(2024, 9, 26, 19, 9, 31, 370, DateTimeKind.Utc).AddTicks(3605)
                         });
                 });
 

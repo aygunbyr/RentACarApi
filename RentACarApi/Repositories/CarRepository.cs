@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
-using RentACarApi.Dtos;
 using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 using RentACarApi.Repositories.Interfaces;
 
 namespace RentACarApi.Repositories
 {
-    public class CarRepository : Repository<Car>, ICarRepository
+    public class CarRepository : Repository<Car, long>, ICarRepository
     {
         private readonly ApplicationDbContext _db;
         public CarRepository(ApplicationDbContext db) : base(db)
@@ -61,7 +61,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }
@@ -91,7 +93,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }
@@ -121,7 +125,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }
@@ -151,7 +157,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }
@@ -181,7 +189,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }
@@ -211,7 +221,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             } 
@@ -221,7 +233,7 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public async Task<CarDetailDto?> GetDetailById(int id)
+        public async Task<CarDetailDto?> GetDetailById(long id)
         {
             try
             {
@@ -245,7 +257,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 );
             } 
             catch(Exception ex)
@@ -274,7 +288,9 @@ namespace RentACarApi.Repositories
                     car.Plate,
                     car.BrandName,
                     car.ModelName,
-                    car.DailyPrice
+                    car.DailyPrice,
+                    car.CreatedAt,
+                    car.UpdatedAt
                 )).ToListAsync();
                 return details;
             }

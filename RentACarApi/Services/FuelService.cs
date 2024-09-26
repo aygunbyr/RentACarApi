@@ -5,7 +5,7 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class FuelService : IService<Fuel>, IFuelService
+    public class FuelService : IService<Fuel, int>, IFuelService
     {
         private readonly IUnitOfWork _unitOfWork;
         public FuelService(IUnitOfWork unitOfWork)

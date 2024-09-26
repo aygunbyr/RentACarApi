@@ -5,7 +5,7 @@ using RentACarApi.Repositories.Interfaces;
 
 namespace RentACarApi.Repositories
 {
-    public class FuelRepository : Repository<Fuel>, IFuelRepository
+    public class FuelRepository : Repository<Fuel, int>, IFuelRepository
     {
         private readonly ApplicationDbContext _db;
         public FuelRepository(ApplicationDbContext db) : base(db)

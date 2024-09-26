@@ -4,7 +4,7 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class TransmissionService : IService<Transmission>, ITransmissionService
+    public class TransmissionService : IService<Transmission, int>, ITransmissionService
     {
         private readonly IUnitOfWork _unitOfWork;
         public TransmissionService(IUnitOfWork unitOfWork)

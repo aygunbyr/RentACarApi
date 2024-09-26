@@ -1,11 +1,11 @@
-﻿using RentACarApi.Dtos;
-using RentACarApi.Models;
+﻿using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 using RentACarApi.Repositories.Interfaces;
 using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class CarService : IService<Car>, ICarService
+    public class CarService : IService<Car, long>, ICarService
     {
         private readonly IUnitOfWork _unitOfWork;
         public CarService(IUnitOfWork unitOfWork)
@@ -32,7 +32,7 @@ namespace RentACarApi.Services
             return cars;
         }
 
-        public async Task<Car> GetByIdAsync(int id)
+        public async Task<Car> GetByIdAsync(long id)
         {
             Car car = await _unitOfWork.Car.GetByIdAsync(id);
             return car;

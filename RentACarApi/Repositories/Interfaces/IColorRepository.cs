@@ -2,7 +2,7 @@
 
 namespace RentACarApi.Repositories.Interfaces
 {
-    public interface IColorRepository : IRepository<Color>
+    public interface IColorRepository : IRepository<Color, int>
     {
         public Color Update(Color color);
     }

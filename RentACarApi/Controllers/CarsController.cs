@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
-using RentACarApi.Dtos;
 using RentACarApi.Models;
+using RentACarApi.Models.Dtos;
 using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Controllers

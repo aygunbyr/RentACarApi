@@ -1,6 +1,6 @@
-﻿namespace RentACarApi.Dtos
+﻿namespace RentACarApi.Models.Dtos
 {
-    public record CarDetailDto(int Id,
+    public record CarDetailDto(long Id,
                                string? FuelName,
                                string? TransmissionName,
                                string? ColorName,
@@ -10,5 +10,7 @@
                                string? Plate,
                                string? BrandName,
                                string? ModelName,
-                               double? DailyPrice);
+                               double? DailyPrice,
+                               DateTime CreatedAt,
+                               DateTime UpdatedAt);
 }

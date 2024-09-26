@@ -1,20 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACarApi.Data;
+using RentACarApi.Models;
 using RentACarApi.Repositories.Interfaces;
 
 namespace RentACarApi.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : Entity<TId>, new()
     {
         private readonly ApplicationDbContext _db;
-        private readonly DbSet<T> dbSet;
+        private readonly DbSet<TEntity> dbSet;
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            this.dbSet = _db.Set<TEntity>();
         }
 
-        public T Add(T entity)
+        public TEntity Add(TEntity entity)
         {
             try
             {
@@ -27,7 +28,7 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public T Delete(T entity)
+        public TEntity Delete(TEntity entity)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             try
             {
@@ -52,11 +53,11 @@ namespace RentACarApi.Repositories
             }
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(TId id)
         {
             try
             {
-                T entity = await dbSet.FindAsync(id);
+                TEntity entity = await dbSet.FindAsync(id);
                 if(entity == null)
                 {
                     throw new KeyNotFoundException($"Entity with id {id} not found.");
