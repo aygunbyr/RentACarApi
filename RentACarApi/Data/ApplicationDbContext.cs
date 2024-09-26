@@ -12,11 +12,36 @@ namespace RentACarApi.Data
         public DbSet<Fuel> Fuels { get; set; }
         public DbSet<Transmission> Transmissions { get; set; }
 
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified))
+            {
+                if (entry.Entity is Entity<object> entity)
+                {
+                    entity.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+            return base.SaveChanges();
+        }
+        
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified))
+            {
+                if (entry.Entity is Entity<object> entity)
+                {
+                    Console.WriteLine(entry.Entity);
+                    entity.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Color>().Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-            modelBuilder.Entity<Color>().Property(c => c.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Color>().Property(c => c.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "Red"},
@@ -31,7 +56,7 @@ namespace RentACarApi.Data
                 );
 
             modelBuilder.Entity<Fuel>().Property(f => f.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-            modelBuilder.Entity<Fuel>().Property(f => f.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Fuel>().Property(f => f.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<Fuel>().HasData(
                 new Fuel { Id = 1, Name = "Gasoline" },
@@ -40,7 +65,7 @@ namespace RentACarApi.Data
                 );
 
             modelBuilder.Entity<Transmission>().Property(t => t.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-            modelBuilder.Entity<Transmission>().Property(t => t.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Transmission>().Property(t => t.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<Transmission>().HasData(
                 new Transmission { Id = 1, Name = "Automatic"},
@@ -48,7 +73,7 @@ namespace RentACarApi.Data
                 );
 
             modelBuilder.Entity<Car>().Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-            modelBuilder.Entity<Car>().Property(c => c.UpdatedAt).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETUTCDATE()");
+            modelBuilder.Entity<Car>().Property(c => c.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             modelBuilder.Entity<Car>().HasData(
                 new Car { Id = 1, ColorId = 1, FuelId = 3, TransmissionId = 1, CarState = "Available", KiloMeter = 15000, ModelYear = 2016, Plate = "34 AB 1456", BrandName = "Mercedes Benz", ModelName = "EQC", DailyPrice = 500.00 },
@@ -63,7 +88,5 @@ namespace RentACarApi.Data
                 new Car { Id = 10, ColorId = 1, FuelId = 1, TransmissionId = 1, CarState = "In Care", KiloMeter = 75000, ModelYear = 2020, Plate = "35 YU 9402", BrandName = "Audi", ModelName = "Q7", DailyPrice = 1500.00 }
                 );
         }
-
-
     }
 }
