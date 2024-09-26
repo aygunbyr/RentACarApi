@@ -5,7 +5,7 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class CarService : IService<Car, long>, ICarService
+    public class CarService : ICarService
     {
         private readonly IUnitOfWork _unitOfWork;
         public CarService(IUnitOfWork unitOfWork)

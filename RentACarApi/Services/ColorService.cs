@@ -4,7 +4,7 @@ using RentACarApi.Services.Interfaces;
 
 namespace RentACarApi.Services
 {
-    public class ColorService : IService<Color, int>, IColorService
+    public class ColorService : IColorService
     {
         private readonly IUnitOfWork _unitOfWork;
         public ColorService(IUnitOfWork unitOfWork)
