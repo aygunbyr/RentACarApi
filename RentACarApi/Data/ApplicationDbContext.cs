@@ -12,34 +12,9 @@ namespace RentACarApi.Data
         public DbSet<Fuel> Fuels { get; set; }
         public DbSet<Transmission> Transmissions { get; set; }
 
-        public override int SaveChanges()
-        {
-            foreach (var entry in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Modified))
-            {
-                if (entry.Entity is Entity<object> entity)
-                {
-                    entity.UpdatedAt = DateTime.UtcNow;
-                }
-            }
-            return base.SaveChanges();
-        }
-        
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            foreach (var entry in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Modified))
-            {
-                if (entry.Entity is Entity<object> entity)
-                {
-                    Console.WriteLine(entry.Entity);
-                    entity.UpdatedAt = DateTime.UtcNow;
-                }
-            }
-            return await base.SaveChangesAsync(cancellationToken);
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Color>().Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
             modelBuilder.Entity<Color>().Property(c => c.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
 
@@ -87,6 +62,8 @@ namespace RentACarApi.Data
                 new Car { Id = 9, ColorId = 9, FuelId = 1, TransmissionId = 1, CarState = "In Care", KiloMeter = 60000, ModelYear = 2018, Plate = "35 MN 4546", BrandName = "Audi", ModelName = "A8", DailyPrice = 1300.00 },
                 new Car { Id = 10, ColorId = 1, FuelId = 1, TransmissionId = 1, CarState = "In Care", KiloMeter = 75000, ModelYear = 2020, Plate = "35 YU 9402", BrandName = "Audi", ModelName = "Q7", DailyPrice = 1500.00 }
                 );
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
